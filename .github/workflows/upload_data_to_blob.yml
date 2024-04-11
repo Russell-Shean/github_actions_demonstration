@@ -9,6 +9,8 @@ name: Upload data to Azure blob
 
 # run the job at a scheduled time
 on:
+  push:
+    branches: main
 # This is 9 AM UTC which should correspond to 2 am in Seattle
 # more deets about cron scheduling:
          # https://www.tinybird.co/docs/guides/ingest/scheduling-with-github-actions-and-cron
