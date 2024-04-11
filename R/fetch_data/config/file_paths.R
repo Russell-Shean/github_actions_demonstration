@@ -1,7 +1,7 @@
 # file path constants
 BLOB_URL <- Sys.getenv("BLOB_URL")
 AZURE_KEY <- Sys.getenv("AZURE_KEY")
-CONTAINER_NAME <- 
+CONTAINER_NAME <- Sys.getenv("CONTAINER_NAME")
 
 # Define path to the wolf data
 wolf_geojson <- "https://geodataservices.wdfw.wa.gov/arcgis/rest/services/WP_Statewide/Wolf_PackPolygons/MapServer/1/query?outFields=*&where=1%3D1&f=geojson"
