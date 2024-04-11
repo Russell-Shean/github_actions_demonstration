@@ -9,10 +9,5 @@ suppressWarnings(
 # load packages using pacman
 suppressWarnings(
   pacman::p_load("AzureStor",
-                 "devtools",
-                 "dplyr",
                  "lubridate",
-                 "sf"
-                 
-                 
-  ))
+                 "sf" ))
