@@ -26,10 +26,16 @@ upload_time <- Sys.time() |>
   lubridate::with_tz("America/Los_Angeles") |>
   format("%Y-%m-%d_%H-%M-%S")
 
-
+#upload an archived version
 upload_blob(container,
             src = temp_file,
             dest = paste0("raw_data/",
                           "wolf_packs_",
                           upload_time,
                           ".csv"))
+
+#overwrite with the most recent version
+upload_blob(container,
+            src = temp_file,
+            dest = paste0("raw_data/wolf_packs.csv"))
+
