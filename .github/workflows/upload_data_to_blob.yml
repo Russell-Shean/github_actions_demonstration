@@ -1,0 +1,48 @@
+# source: https://rfortherestofus.com/2023/05/github-actions
+
+name: Upload data to Azure blob
+# This action pulls data from a public API
+# uses R to transform it from a spatial data set to a csv file
+# and then uploads the data to an azure blob
+# the action runs weekly on a schedule
+
+
+# run the job at a scheduled time
+on:
+  push:
+    branches: main
+# This is 9 AM UTC which should correspond to 2 am in Seattle
+# more deets about cron scheduling:
+         # https://www.tinybird.co/docs/guides/ingest/scheduling-with-github-actions-and-cron
+         # https://medium.com/tradeling/how-to-schedule-jobs-using-github-actions-9f32667706ea
+  schedule:
+  - cron: "0 9 * * 0"
+
+jobs:
+  fetch-from-API:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Install R package linux dependencies
+        run: sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
+
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Run R script
+        env: 
+          AZURE_KEY: ${{ secrets.AZURE_KEY }}
+          BLOB_URL: ${{ secrets.BLOB_URL }}
+          CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+
+        run: Rscript -e 'source("R/fetch_data/scripts/fetch_wolf_data.R")'
+
+      - name: Commit results
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add . 
+          git commit -m 'Data updated' || echo "No changes to commit"
+          git push origin || echo "No changes to commit"
