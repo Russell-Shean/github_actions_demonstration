@@ -1,9 +1,9 @@
 # source: https://rfortherestofus.com/2023/05/github-actions
 
 name: Process Data
-# This action pulls data from a public API
-# uses R to transform it from a spatial data set to a csv file
-# and then uploads the data to an azure blob
+# This action pulls data from Azure blob storage
+# uses R to filter the data
+# and then uploads the data back to an azure blob
 # the action runs weekly on a schedule
 
 
